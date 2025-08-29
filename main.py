@@ -6,26 +6,27 @@ import setting
 import time
 import sys
 import choose_course
+import util
 
 if __name__ == "__main__":
 
     for i in range(setting.count):
-        for course in setting.courses:
+        Courses = [util.Course(i['id']) for i in setting.courses]
+        for course in Courses:
             try:
-                response = choose_course.start_choose(
-                    course['id'], course['type'])
+                response = course.choose()
 
                 time.sleep(setting.delay/1000.0)
                 
                 if "该课程超过课容量" in response:
-                    print(course['name']+": 该课程超过课容量")
+                    print(f"{course.name}({course.teacher}): 该课程超过课容量")
                     # break
                 elif "添加选课志愿成功" in response:
                     print("抢课成功")
                     break
                 else:
-                    print(course['name']+": "+response)
-        
+                    print(f"{course.name}({course.teacher}): "+response)
+
             except KeyboardInterrupt:
                 print("通过键盘中断退出程序")
                 sys.exit()

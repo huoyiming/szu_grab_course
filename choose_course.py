@@ -15,7 +15,7 @@ def query_result() -> None:
     response = session.post(
         url=util.get_url("xsxkapp/sys/xsxkapp/elective/courseResult.do?timestamp={}&studentCode={}").format(
             util.get_timestamp(), setting.user_id),
-        headers=headers)
+        )
 
     json_data = json.loads(response.text)
     # print(json_data['dataList'])
