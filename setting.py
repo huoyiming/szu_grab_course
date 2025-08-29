@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # 程序设置
 
+import requests
+
 '''
 需要配置的属性有:
 1. user_id: 学号
-2. cookie,electiveBatchCode,token这三个字段需要在浏览器登录后，打开开发者工具，选择在network选项卡中选择recommendedCourse.do
+2. cookie,token这两个字段需要在浏览器登录后，打开开发者工具，选择在network选项卡中选择recommendedCourse.do
    然后再找出相应字段
 3. 你要选择的课程，类比相关格式，填写courses
 4. 然后设置抢课延迟和选课提交次数
@@ -20,10 +22,12 @@ ps.第一步可以不用，改为F12直接查看id。
 user_id:str = "2021150047"
 
 #每次重新登录后会改变
-cookie = ("_WEU=rfhjF4PaYINuCCd_kqfaHvohaBAqdm4TgJ6RtIMKpLduDy1Ef2pMdvxDBRgFba2r; JSESSIONID=2CD85D58A90AA87245C9051B1E7976B5; "
-          "b-user-id=c571adeb-8c51-f97f-3375-58c09fcab4df; insert_cookie=33374701")
+cookie = '''
+_WEU=rfhjF4PaYINuCCd_kqfaHvohaBAqdm4TgJ6RtIMKpLduDy1Ef2pMdvxDBRgFba2r; JSESSIONID=2CD85D58A90AA87245C9051B1E7976B5; b-user-id=c571adeb-8c51-f97f-3375-58c09fcab4df; insert_cookie=33374701
+'''
 
-electiveBatchCode = "04a79c9569de4ac09f6826f6324a644a"
+# 此字段自动获取，无需填写
+# electiveBatchCode = "04a79c9569de4ac09f6826f6324a644a"
 
 #每次重新登录后会改变
 token = "6e912f8e-a3b4-4ef5-8a0b-ca8358420b1c"
@@ -69,4 +73,9 @@ headers:dict =  {
     "Pragma": "no-cache"
 }
 
-
+try:
+    myInfo = requests.post(f'{url}xsxkapp/sys/xsxkapp/student/{user_id}.do', headers=headers).json()
+    electiveBatchCode = myInfo.get("data").get("electiveBatch").get("code")
+    print(f'{myInfo.get("data").get("name")}登录校验成功')
+except:
+    exit('校验失败，请检查学号，token，cookie是否填写正确')

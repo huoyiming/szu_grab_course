@@ -11,9 +11,9 @@ import util
 if __name__ == "__main__":
 
     for i in range(setting.count):
-        Courses = [util.Course(i['id']) for i in setting.courses]
-        for course in Courses:
-            try:
+        try:
+            Courses = [util.Course(i['id']) for i in setting.courses]
+            for course in Courses:
                 response = course.choose()
 
                 time.sleep(setting.delay/1000.0)
@@ -27,11 +27,11 @@ if __name__ == "__main__":
                 else:
                     print(f"{course.name}({course.teacher}): "+response)
 
-            except KeyboardInterrupt:
-                print("通过键盘中断退出程序")
-                sys.exit()
-            except:
-                print("出现错误，请检查设置setting.py部分是否填写正确")
+        except KeyboardInterrupt:
+            print("通过键盘中断退出程序")
+            sys.exit()
+        except:
+            print("出现错误，请检查设置setting.py部分是否填写正确")
 
     print("抢课结束")
 

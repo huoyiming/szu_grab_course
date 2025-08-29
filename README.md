@@ -50,7 +50,7 @@ wheel      0.33.1
 
 
 
-2. 点击载荷可以看到studentCode和electiveBatchCode。
+2. ~~点击载荷可以看到studentCode和electiveBatchCode~~ (无需填写)。
 
    ![示意图](./pic/示意图2.png)
 
