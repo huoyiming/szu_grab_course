@@ -46,7 +46,7 @@ class Course:
             "isMajor": "1",
             "queryContent": f"YCJX:2,MOOC:2,{self.id[9:-2]}"
             },
-            "pageSize": "20",
+            "pageSize": "50",
             "pageNumber": "0",
             "order": "",
             "orderBy": "courseNumber"
