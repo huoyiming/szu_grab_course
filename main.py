@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 程序入口
 
-import downloads
+# import downloads
 import setting
 import time
 import sys

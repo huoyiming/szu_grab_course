@@ -4,14 +4,14 @@
 import setting
 import util
 import json
-import os
+# import os
 
 headers = setting.headers
 session = util.get_session()
 
 
 # 查询选课结果（已经选中的课程）
-def query_result():
+def query_result() -> None:
     response = session.post(
         url=util.get_url("xsxkapp/sys/xsxkapp/elective/courseResult.do?timestamp={}&studentCode={}").format(
             util.get_timestamp(), setting.user_id),
@@ -35,10 +35,21 @@ def query_result():
 
 
 # 选课
-def start_choose(class_id, teaching_class_type):
+def start_choose(class_id:str, teaching_class_type:str, campus:str) -> str:
+    data = {
+        "data": {
+            "operationType": "1",
+            "studentCode": setting.user_id,
+            "electiveBatchCode": setting.electiveBatchCode,
+            "teachingClassId": class_id,
+            "isMajor": "1",
+            "campus": campus,
+            "teachingClassType": teaching_class_type,
+            "chooseVolunteer": "1"
+        }
+    }
     form_data = {
-        'addParam': (r'''{"data":{"operationType":"1","studentCode":%s,"electiveBatchCode":%s,"teachingClassId":%s,"isMajor":"1","campus":"01","teachingClassType":%s,"chooseVolunteer":"1"}}''' % (
-            setting.user_id, setting.electiveBatchCode, class_id, teaching_class_type))
+        'addParam': json.dumps(data)
     }
 
     response = session.post(

@@ -28,6 +28,7 @@ electiveBatchCode = "04a79c9569de4ac09f6826f6324a644a"
 #每次重新登录后会改变
 token = "6e912f8e-a3b4-4ef5-8a0b-ca8358420b1c"
 
+# type
 # 本班课程： 'TJKC'
 # 方案内课程: 'FANKC'
 # 方案外课程： 'FAWKC'
@@ -35,16 +36,19 @@ token = "6e912f8e-a3b4-4ef5-8a0b-ca8358420b1c"
 # 慕课: "ＭOOC"，
 # 辅修课程: "FXKC"，
 # 体育课程:"TYKC"
+# campus (可能会变化，仅供参考)
+# 粤海校区: 01
+# 丽湖校区: 02
+# 深大附属医院: 03
+# 技术大学: 04
+# 香港校区: 05
+# 深理光明校区: 06
 # 你要抢的课程，按照如下格式提前先填写好   !!!!!其实不更新课程列表也可以.....F12看id就好......
 courses =[
-    #id的意思是2023-2024学期+课程编号+课序号， 课程类别，       课程名字(老师名字)   【注意是英文括号】
-    # {'id':'202320242150285000103','type':'FANKC','name':"互联网编程(毛斐巧)"},
-    {'id':'202320242150294000101','type':'FANKC','name':"信息检索(潘微科)"},
-    # {'id':'202320242150199003801','type':'FANKC','name':"数据库内核原理与实现(JIANBIN QIN)"}
-    # {'id':'202320242150328000102','type':'FANKC','name':"网络安全(林秋镇)"},
-    # {'id':'202320242150199001301','type':'FANKC','name':"数据挖掘(陈小军)"},
-    # {'id':'202320242150297000101','type':'FANKC','name':"面向对象高级编程专题(徐鹏飞)"},
-    # {'id':'202320242190064000132','type':'FANKC','name':"高等数学A（2）(李莉)"},
+    #id的意思是2023-2024学期+课程编号+课序号， 课程类别，  课程名字(老师名字)   【注意是英文括号】,   校区代码(参考以上注释填写)
+    {'id':'202320242150294000101','type':'FANKC','name':"信息检索(潘微科)",'campus':'01'},
+    {'id':'xxxxxxxxxxxxxxxxxxxxx','type':'FANKC','name':"高等数学(某某某)",'campus':'01'},
+    {'id':'xxxxxxxxxxxxxxxxxxxxx','type':'FANKC','name':"某课程(某某某)",'campus':'01'},
 ]
 # 抢课的顺序是从上到下，若上面的课程没抢到就不会往下抢，想改成循环的话可以重构一下main.py（更新：已重构完成  归忆）
 
@@ -68,7 +72,7 @@ count:int = 150000000
 
 url:str = "http://bkxk.szu.edu.cn/"
 
-headers:map =  {
+headers:dict =  {
     "Cookie": cookie.strip(),
     "token": token.strip(),
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
