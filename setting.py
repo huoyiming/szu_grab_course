@@ -2,6 +2,9 @@
 # 程序设置
 
 import requests
+import logging
+import sys
+import logging
 
 '''
 需要配置的属性有:
@@ -17,20 +20,24 @@ import requests
 流程：1.运行download_data.py拉取最新课程信息。2.查看信息按照格式填写setting.py。3.运行main.py进行抢课。
 ps.第一步可以不用，改为F12直接查看id。
 '''
+# 日志文件级别
+logging_level = logging.INFO
 
 #学号
-user_id:str = "2021150047"
+user_id:str = ""
 
 #每次重新登录后会改变
 cookie = '''
-_WEU=rfhjF4PaYINuCCd_kqfaHvohaBAqdm4TgJ6RtIMKpLduDy1Ef2pMdvxDBRgFba2r; JSESSIONID=2CD85D58A90AA87245C9051B1E7976B5; b-user-id=c571adeb-8c51-f97f-3375-58c09fcab4df; insert_cookie=33374701
+
 '''
 
 # 此字段自动获取，无需填写
 # electiveBatchCode = "04a79c9569de4ac09f6826f6324a644a"
 
 #每次重新登录后会改变
-token = "6e912f8e-a3b4-4ef5-8a0b-ca8358420b1c"
+token = '''
+
+'''
 
 # 你要抢的课程，按照如下格式提前先填写好   !!!!!其实不更新课程列表也可以.....F12看id就好......
 courses =[
@@ -73,9 +80,23 @@ headers:dict =  {
     "Pragma": "no-cache"
 }
 
+logger = logging.getLogger("logger")
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("running.log")
+file_handler.setFormatter(formatter)
+file_handler.encoding = 'utf-8'
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+stream_handler.setLevel(logging_level)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
 try:
     myInfo = requests.post(f'{url}xsxkapp/sys/xsxkapp/student/{user_id}.do', headers=headers).json()
+    logger.debug(myInfo)
     electiveBatchCode = myInfo.get("data").get("electiveBatch").get("code")
-    print(f'{myInfo.get("data").get("name")}登录校验成功')
+    logger.info(f'{myInfo.get("data").get("name")}登录校验成功')
 except:
-    exit('校验失败，请检查学号，token，cookie是否填写正确')
+    logger.error('校验失败，请检查学号，token，cookie是否填写正确')
+    sys.exit(1)

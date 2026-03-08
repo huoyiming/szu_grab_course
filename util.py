@@ -5,6 +5,9 @@ import time
 import requests
 import setting
 import json
+import logging
+
+logger = logging.getLogger("logger")
 
 session = requests.session()
 session.headers.update(setting.headers)
@@ -26,6 +29,7 @@ def get_url(relavie_path):
 
 class Course:
     def __init__(self, id:str):
+        logger.debug(f'初始化课程{id}')
         self.id = id
         info = json.loads(session.post(
             get_url('xsxkapp/sys/xsxkapp/util/canchoose.do'),
@@ -57,9 +61,14 @@ class Course:
             data=form_data
         ).text)
         classList = [i for i in resp.get('dataList') if i.get('courseNumber') == self.id[9:-2]]
+        if not classList:
+            logger.debug(f'课程信息获取失败：{self.id}')
+            raise Exception('课程信息获取失败')
         self.name = classList[int(self.id[-2:])-1].get('courseName')
         self.teacher = classList[int(self.id[-2:])-1].get('teacherName') if classList[int(self.id[-2:])-1].get('teachingClassID') == self.id else '教师获取失败'
+        logger.debug(f'课程信息：{self.name}({self.teacher})  校区：{self.campus}  类型：{self.type}')
     def choose(self):
+        logger.debug(f'尝试选择课程 {self.name}({self.teacher})')
         data = {
                 "data": {
                     "operationType": "1",
@@ -79,4 +88,5 @@ class Course:
             url=get_url("xsxkapp/sys/xsxkapp/elective/volunteer.do"),
             data=form_data,
             )
-        return response.text
+        logger.debug(f'选课请求返回：{response.text}')
+        return response.json()
