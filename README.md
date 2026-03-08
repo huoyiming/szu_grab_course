@@ -2,19 +2,6 @@
 
 szu_grab_course是基于python的深圳大学抢课脚本，下载后简单配置即可使用。
 
-复刻于https://github.com/Lewin671/YourLesson 后进行维护和更新。
-
-
-
-## 联系方式
-
-微信号：guiyiac
-
-邮箱：1677852098@qq.com
-
-个人博客：https://blog.csdn.net/qq1677852098
-
-
 
 
 ## 下载
