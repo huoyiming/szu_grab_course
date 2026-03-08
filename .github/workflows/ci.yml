@@ -34,7 +34,7 @@ jobs:
           echo "title=$(git log -1 --pretty=%s)" >> $env:GITHUB_OUTPUT
 
       - name: Upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v6
         with:
           name: build
           path: build.zip
