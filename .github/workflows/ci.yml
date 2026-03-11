@@ -21,13 +21,13 @@ jobs:
 
       - name: Pack to exe
         run: |
-          mkdir build
+          mkdir szu_grab_course
           pyinstaller -F main.py
-          mv dist/*.exe build/
-          mv README.md build/
-          mv setting.yaml build/
-          mv des.min.js build/
-          Compress-Archive -Path build -DestinationPath build.zip
+          mv dist/*.exe szu_grab_course/
+          mv README.md szu_grab_course/
+          mv setting.yaml szu_grab_course/
+          mv des.min.js szu_grab_course/
+          Compress-Archive -Path szu_grab_course -DestinationPath szu_grab_course.zip
 
       - name: Get commit info
         id: commit
@@ -39,13 +39,13 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: build
-          path: build.zip
+          path: szu_grab_course.zip
 
       - name: Create Pre-release And Upload Asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build.zip
+          file: szu_grab_course.zip
           file_glob: true
           tag: ${{ steps.commit.outputs.short }}
           overwrite: true
