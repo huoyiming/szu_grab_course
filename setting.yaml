@@ -1,0 +1,20 @@
+# 用户认证信息
+user:
+  id: ""  # 学号
+  password: ""  # 密码
+
+# 你要抢的课程
+courses:
+  # id的意思是2023-2024学期+课程编号+课序号
+  - xxxxxxxxxxxxxxxxxxxxx  
+  # - xxxxxxxxxxxxxxxxxxxxx  # 高等数学(某某某)
+
+# 网络请求设置
+network:
+  delay: 400  # 抢课间隔，单位是ms（最好不要低于400ms，不然可能会导致系统异常）
+  count: 150000000  # 抢课的次数
+
+# 日志设置
+logging:
+  level: "INFO"  # 日志级别：DEBUG, INFO, WARNING, ERROR
+  file: "grab_course.log"  # 日志文件路径

@@ -25,6 +25,8 @@ jobs:
           pyinstaller -F main.py
           mv dist/*.exe build/
           mv README.md build/
+          mv setting.yaml build/
+          mv des.min.js build/
           Compress-Archive -Path build -DestinationPath build.zip
 
       - name: Get commit info
