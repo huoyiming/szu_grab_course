@@ -8,6 +8,7 @@ import logging
 import yaml
 import time
 import execjs
+import base64
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -104,7 +105,7 @@ def get_encrypted_password(password):
         js_code = f.read()
     ctx = execjs.compile(js_code)
     encrypted_pwd = ctx.call("getPassword", password)
-    return encrypted_pwd
+    return base64.b64encode(encrypted_pwd.encode()).decode()
 
 session = requests.session()
 session.headers.update(headers)
